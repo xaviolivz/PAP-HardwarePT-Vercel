@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HardwarePT - Loja Online de Hardware e Componentes</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .noticia-principal:hover,
+        .noticia-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .noticia-principal,
+        .noticia-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+    <div class="container">
+        <div class="header-content">
+            <div class="header-left">
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="logo">
+                    <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                        <img src="imagens/logo.png" alt="HardwarePT" class="logo-img">
+                    </a>
+                </div>
+            </div>
+
+            <div class="header-center">
+                <!-- Espaço vazio para empurrar a pesquisa mais à direita -->
+            </div>
+
+            <!-- Barra de Pesquisa -->
+            <div class="header-search">
+                <div class="search-box">
+                    <svg class="search-icon" width="18" height="18" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                        <circle cx="9" cy="9" r="6" stroke-width="2"/>
+                        <path d="M14 14L18 18" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <input type="text" 
+                           id="searchInput" 
+                           class="search-input-main" 
+                           placeholder="Pesquisar produtos..."
+                           autocomplete="off">
+                    <button class="search-clear" id="searchClear" style="display: none;">
+                        <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zM5.354 4.646a.5.5 0 1 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="search-dropdown" id="searchDropdown"></div>
+            </div>
+
+            <div class="header-actions">
+                <div id="userMenu">
+                    <a href="login.html" class="login-btn" title="Entrar na conta">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </a>
+                </div>
+
+                <button class="cart-btn" onclick="toggleCart()">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                        <path d="M2 2H4L6 14H16L18 6H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    <span class="cart-count" id="cartCount">0</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+  
+<div class="menu-overlay" id="menuOverlay" onclick="toggleMenu()"></div>
+<nav class="side-menu" id="sideMenu">
+    <div class="side-menu-header">
+        <h3>Categorias</h3>
+        <button onclick="toggleMenu()" class="close-menu">×</button>
+    </div>
+    <ul class="side-menu-list">
+        <li>
+            <a href="produtos.html?categoria=processadores">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                    <rect x="9" y="9" width="6" height="6"/>
+                    <line x1="9" y1="2" x2="9" y2="4"/>
+                    <line x1="15" y1="2" x2="15" y2="4"/>
+                    <line x1="9" y1="20" x2="9" y2="22"/>
+                    <line x1="15" y1="20" x2="15" y2="22"/>
+                    <line x1="2" y1="9" x2="4" y2="9"/>
+                    <line x1="2" y1="15" x2="4" y2="15"/>
+                    <line x1="20" y1="9" x2="22" y2="9"/>
+                    <line x1="20" y1="15" x2="22" y2="15"/>
+                </svg>
+                <span>Processadores</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=placas-graficas">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="6" width="20" height="12" rx="2"/>
+                    <circle cx="6" cy="12" r="2"/>
+                    <line x1="10" y1="10" x2="20" y2="10"/>
+                    <line x1="10" y1="14" x2="20" y2="14"/>
+                </svg>
+                <span>Placas Gráficas</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=motherboards">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="3" width="18" height="18" rx="2"/>
+                    <line x1="3" y1="9" x2="21" y2="9"/>
+                    <line x1="9" y1="21" x2="9" y2="9"/>
+                </svg>
+                <span>Motherboards</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=memoria-ram">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="8" width="18" height="8" rx="1"/>
+                    <rect x="5" y="10" width="2" height="4"/>
+                    <rect x="9" y="10" width="2" height="4"/>
+                    <rect x="13" y="10" width="2" height="4"/>
+                    <rect x="17" y="10" width="2" height="4"/>
+                </svg>
+                <span>Memórias RAM</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=armazenamento">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="3" y="6" width="18" height="12" rx="2"/>
+                    <circle cx="7" cy="12" r="2"/>
+                    <line x1="12" y1="10" x2="18" y2="10"/>
+                    <line x1="12" y1="14" x2="18" y2="14"/>
+                </svg>
+                <span>Armazenamento</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=fontes-de-alimentacao">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="4" y="8" width="16" height="12" rx="2"/>
+                    <path d="M12 8V4"/>
+                    <circle cx="9" cy="14" r="1.5"/>
+                    <circle cx="15" cy="14" r="1.5"/>
+                </svg>
+                <span>Fontes de Alimentação</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=caixas-pc">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="5" y="2" width="14" height="20" rx="2"/>
+                    <circle cx="12" cy="18" r="1"/>
+                    <line x1="9" y1="6" x2="15" y2="6"/>
+                    <line x1="9" y1="10" x2="15" y2="10"/>
+                </svg>
+                <span>Caixas de PC</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=refrigeracao">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <circle cx="12" cy="12" r="9"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <line x1="12" y1="3" x2="12" y2="9"/>
+                    <line x1="12" y1="15" x2="12" y2="21"/>
+                    <line x1="3" y1="12" x2="9" y2="12"/>
+                    <line x1="15" y1="12" x2="21" y2="12"/>
+                </svg>
+                <span>Coolers</span>
+            </a>
+        </li>
+        <li>
+            <a href="produtos.html?categoria=acessorios">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <rect x="2" y="7" width="20" height="14" rx="2"/>
+                    <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+                <span>Acessórios</span>
+            </a>
+        </li>
+        <li>
+            <a href="index.html#assistencia">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+                </svg>
+                <span>Assistência Técnica</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Encontre os componentes perfeitos para o seu computador</h1>
+                    <p>Componentes de qualidade, preços competitivos e suporte 24/7. Mais de 10.000 clientes satisfeitos.</p>
+                    <div class="hero-buttons">
+                        <button class="btn-primary" onclick="window.location.href='produtos.html'">
+                            Explorar Produtos
+                        </button>
+                        <button class="btn-secondary" onclick="window.location.href='index.html#ofertas'">
+                            Ver Promoções
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-image">
+                    <img src="imagens/Gemini_Generated_Image_yzz0g8yzz0g8yzz0.png" alt="Imagem Inicial">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="categories" id="categorias">
+        <div class="container">
+            <h2 class="section-title">Categorias Populares</h2>
+            <div class="categories-grid">
+                <div class="category-card" onclick="filtrarPorCategoria('processadores')">
+                    <div class="category-icon">
+                        <img src="imagens/imgintelamd.png" alt="Processador">
+                    </div>
+                    <h3>Processadores</h3>
+                    <p>AMD e Intel</p>
+                </div>
+                <div class="category-card" onclick="filtrarPorCategoria('placas-graficas')">
+                    <div class="category-icon">
+                        <img src="imagens/imgamdnvidia.png" alt="Placa Gráfica">
+                    </div>
+                    <h3>Placas Gráficas</h3>
+                    <p>NVIDIA e AMD</p>
+                </div>
+                <div class="category-card" onclick="filtrarPorCategoria('memoria-ram')">
+                    <div class="category-icon">
+                        <img src="imagens/imgddr.png" alt="Memórias RAM">
+                    </div>
+                    <h3>Memórias RAM</h3>
+                    <p>DDR4 e DDR5</p>
+                </div>
+                <div class="category-card" onclick="filtrarPorCategoria('armazenamento')">
+                    <div class="category-icon">
+                        <img src="imagens/imghddssd.png" alt="Armazenamento">
+                    </div>
+                    <h3>Armazenamento</h3>
+                    <p>SSD NVMe e HDD</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROMOÇÕES ESPECIAIS -->
+    <section class="deals" id="ofertas">
+        <div class="container">
+            <h2 class="section-title">Promoções Especiais</h2>
+            <div class="deals-grid" id="dealsGrid">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    <p style="color: #737373;">A carregar promoções...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="banner">
+        <div class="container">
+            <div class="banner-content">
+                <div class="banner-text">
+                    <span class="banner-badge">Oferta Especial</span>
+                    <h2 class="banner-title">Até -40% em Placas Gráficas</h2>
+                    <p class="banner-subtitle">Aproveite os melhores precos em GPUs selecionadas. Oferta por tempo limitado!</p>
+                    <a href="produtos.html?categoria=placas-graficas" class="btn btn-primary">Aproveitar Oferta</a>
+                </div>
+                <div class="banner-image">
+                    <div class="gpu-illustration">
+                        <svg viewBox="0 0 200 150" fill="none">
+                            <rect x="20" y="40" width="160" height="70" rx="8" fill="currentColor" opacity="0.1" stroke="currentColor" stroke-width="2"/>
+                            <rect x="30" y="50" width="40" height="30" rx="4" fill="currentColor" opacity="0.2"/>
+                            <rect x="30" y="85" width="40" height="15" rx="2" fill="currentColor" opacity="0.15"/>
+                            <rect x="80" y="50" width="90" height="50" rx="4" fill="currentColor" opacity="0.1" stroke="currentColor" stroke-width="1"/>
+                            <circle cx="100" cy="75" r="15" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1"/>
+                            <circle cx="145" cy="75" r="15" fill="currentColor" opacity="0.2" stroke="currentColor" stroke-width="1"/>
+                            <rect x="40" y="110" width="10" height="20" fill="currentColor" opacity="0.3"/>
+                            <rect x="60" y="110" width="10" height="20" fill="currentColor" opacity="0.3"/>
+                            <rect x="130" y="110" width="10" height="20" fill="currentColor" opacity="0.3"/>
+                            <rect x="150" y="110" width="10" height="20" fill="currentColor" opacity="0.3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TOP VENDAS -->
+    <section class="deals">
+        <div class="container">
+            <h2 class="section-title">Top Vendas</h2>
+            <div class="deals-grid" id="topVendasGrid">
+                <div style="grid-column: 1 / -1; text-align: center; padding: 2rem;">
+                    <p style="color: #737373;">A carregar produtos...</p>
+                </div>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <button class="btn-secondary" onclick="window.location.href='produtos.html'">Ver Todos os Produtos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- ASSISTÊNCIA TÉCNICA -->
+    <section class="assistencia-tecnica" id="assistencia">
+        <div class="container">
+            <h2 class="section-title">Assistência Técnica</h2>
+            <p class="section-subtitle">A nossa equipa especializada está pronta para ajudar com qualquer problema de hardware</p>
+            <div class="assistencia-grid">
+                <div class="assistencia-card">
+                    <div class="assistencia-icon">🔍</div>
+                    <h3>Diagnóstico Gratuito</h3>
+                    <p>Traga o seu computador e fazemos um diagnóstico completo sem qualquer custo. Identificamos o problema e apresentamos a melhor solução.</p>
+                    <span class="assistencia-badge">Grátis</span>
+                </div>
+                <div class="assistencia-card">
+                    <div class="assistencia-icon">🖥️</div>
+                    <h3>Montagem de PC</h3>
+                    <p>Montamos o seu PC com os componentes adquiridos na nossa loja. Instalação do sistema operativo e drivers incluídos.</p>
+                    <span class="assistencia-badge">A partir de €30</span>
+                </div>
+                <div class="assistencia-card">
+                    <div class="assistencia-icon">🔧</div>
+                    <h3>Reparação & Upgrade</h3>
+                    <p>Substituição de componentes danificados, limpeza interna, aplicação de pasta térmica e upgrades de hardware para melhorar o desempenho.</p>
+                    <span class="assistencia-badge">Orçamento Gratuito</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="features-dark">
+        <div class="container">
+            <div class="features-dark-grid">
+                <div class="features-dark-card">
+                    <div class="features-dark-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
+                            <rect x="2" y="7" width="16" height="10" rx="2"/>
+                            <path d="M18 10l3-1v6l-3-1"/>
+                            <path d="M6 7V5"/>
+                            <path d="M10 7V5"/>
+                        </svg>
+                    </div>
+                    <div class="features-dark-text">
+                        <h3>Entrega em 2-3 dias</h3>
+                        <p>Encomendas feitas até às 14h saem no próprio dia. Sem surpresas, sem esperas.</p>
+                    </div>
+                </div>
+                <div class="features-dark-card">
+                    <div class="features-dark-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
+                            <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                            <path d="M2 17l10 5 10-5"/>
+                            <path d="M2 12l10 5 10-5"/>
+                        </svg>
+                    </div>
+                    <div class="features-dark-text">
+                        <h3>Só componentes originais</h3>
+                        <p>Trabalhamos diretamente com distribuidores oficiais. O que compras aqui é o mesmo que encontras na caixa da marca.</p>
+                    </div>
+                </div>
+                <div class="features-dark-card">
+                    <div class="features-dark-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
+                            <rect x="1" y="3" width="15" height="13" rx="2"/>
+                            <path d="M16 8h4l3 3v5h-7V8z"/>
+                            <circle cx="5.5" cy="18.5" r="2.5"/>
+                            <circle cx="18.5" cy="18.5" r="2.5"/>
+                        </svg>
+                    </div>
+                    <div class="features-dark-text">
+                        <h3>Portes grátis acima de 100€</h3>
+                        <p>Para Portugal Continental. Abaixo disso, o valor é calculado no checkout — sem taxas escondidas.</p>
+                    </div>
+                </div>
+                <div class="features-dark-card">
+                    <div class="features-dark-icon">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="32" height="32">
+                            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                        </svg>
+                    </div>
+                    <div class="features-dark-text">
+                        <h3>Suporte especializado</h3>
+                        <p>Tens dúvidas sobre compatibilidade ou precisas de ajuda a escolher? A nossa equipa usa o hardware que vende.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- BLOGUE DE NOTÍCIAS E NOVIDADES -->
+    <section class="noticias-section" id="noticias">
+        <div class="container">
+            <div class="noticias-header">
+                <h2 class="section-title">Notícias &amp; Novidades</h2>
+            </div>
+
+            <div class="noticias-destaque">
+                <!-- Artigo Principal -->
+                <div class="noticia-principal" onclick="abrirNoticia('rtx5080')" style="cursor:pointer;">
+                    <div class="noticia-img-wrap">
+                        <img src="imagens/rtx5080super.png" alt="RTX 5080 Super">
+                    </div>
+                    <div class="noticia-principal-body">
+                        <h3 class="noticia-principal-titulo">NVIDIA RTX 5080 Super: A nova série que vai redefinir o gaming em 4K</h3>
+                        <p class="noticia-principal-resumo">A NVIDIA anunciou oficialmente a nova linha RTX 5080 Super, trazendo a arquitetura Blackwell aperfeiçoada com 24 GB de GDDR7, ray tracing de nova geração e desempenho até 40% superior ao RTX 4080. Eis tudo o que sabemos sobre os novos reis das placas gráficas.</p>
+                    </div>
+                </div>
+
+                <!-- Coluna de artigos secundários -->
+                <div class="noticias-secundarias">
+                    <article class="noticia-card" onclick="abrirNoticia('ryzen9950x3d')" style="cursor:pointer;">
+                        <div class="noticia-card-img">
+                            <img src="imagens/ryzen99950x3d.png" alt="AMD Ryzen 9 9950X3D">
+                        </div>
+                        <div class="noticia-card-body">
+                            <h4>AMD Ryzen 9 9950X3D: O Processador mais rápido para gaming chega ao mercado</h4>
+                            <p>Com 3D V-Cache de segunda geração e núcleos Zen 5, o novo topo de gama da AMD bate recordes em todos os benchmarks de gaming.</p>
+                        </div>
+                    </article>
+
+                    <article class="noticia-card" onclick="abrirNoticia('ddr6')" style="cursor:pointer;">
+                        <div class="noticia-card-img">
+                            <img src="imagens/ddr6.png" alt="DDR6 RAM">
+                        </div>
+                        <div class="noticia-card-body">
+                            <h4>DDR6: O que esperar da nova geração de memórias RAM e quando chega</h4>
+                            <p>A JEDEC finalizou as especificações do padrão DDR6. Velocidades acima de 12.800 MT/s e latências reduzidas prometem uma revolução.</p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- MODAL DE NOTÍCIAS -->
+    <div id="noticiaModal" style="display:none; position:fixed; inset:0; z-index:9999; background:rgba(0,0,0,0.6); overflow-y:auto;" onclick="fecharNoticia(event)">
+        <div id="noticiaModalContent" style="background:var(--bg-primary, #fff); max-width:700px; margin:2rem auto; border-radius:12px; overflow:hidden; position:relative;" onclick="event.stopPropagation()">
+            <button onclick="fecharNoticiaBtn()" style="position:absolute; top:1rem; right:1rem; background:none; border:none; font-size:1.8rem; cursor:pointer; color:var(--text-primary, #111); line-height:1; z-index:1;">&times;</button>
+            <img id="noticiaModalImg" src="" alt="" style="width:100%; max-height:320px; object-fit:cover;">
+            <div style="padding:1.75rem 2rem 2rem;">
+                <span id="noticiaModalData" style="font-size:0.8rem; color:#737373;"></span>
+                <h2 id="noticiaModalTitulo" style="margin:0.5rem 0 1rem; font-size:1.4rem; line-height:1.3;"></h2>
+                <div id="noticiaModalTexto" style="line-height:1.7; color:var(--text-secondary, #444);"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h3>O seu Carrinho</h3>
+            <button onclick="toggleCart()" class="close-cart">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <div class="empty-cart">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                    <path d="M2 2H4L6 14H16L18 6H6" stroke-linecap="round" stroke-linejoin="round"/>
+                    <circle cx="9" cy="18" r="1.5"/>
+                    <circle cx="15" cy="18" r="1.5"/>
+                </svg>
+                <p>O seu carrinho está vazio</p>
+            </div>
+        </div>
+        <div class="cart-footer">
+            <div class="cart-subtotal">
+                <span>Subtotal</span>
+                <span id="cartSubtotal">€0,00</span>
+            </div>
+            <div class="cart-shipping">
+                <span>Envio</span>
+                <span>Grátis</span>
+            </div>
+            <div class="cart-total">
+                <span>Total</span>
+                <span id="cartTotal">€0,00</span>
+            </div>
+            <button class="btn-checkout" onclick="window.location.href='carrinho.html'">
+                Finalizar Compra
+            </button>
+        </div>
+    </div>
+
+    <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="imagens/logo2.png" class="logo-img2">
+                </div>
+                <p>A sua loja online de confiança para hardware de qualidade com preços competitivos.</p>
+
+                <!-- REDES SOCIAIS -->
+                <div class="footer-social">
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="black"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="TikTok">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+            <div class="footer-col">
+                <h4>Componentes</h4>
+                <ul>
+                    <li><a href="produtos.html?categoria=processadores">Processadores</a></li>
+                    <li><a href="produtos.html?categoria=motherboards">Motherboards</a></li>
+                    <li><a href="produtos.html?categoria=placas-graficas">Placas Gráficas</a></li>
+                    <li><a href="produtos.html?categoria=memoria-ram">Memórias RAM</a></li>
+                    <li><a href="produtos.html?categoria=fontes-de-alimentacao">Fontes de Alimentação</a></li>
+                    <li><a href="produtos.html?categoria=caixas-pc">Caixas de PC</a></li>
+                    <li><a href="produtos.html?categoria=refrigeracao">Coolers</a></li>
+                    <li><a href="produtos.html?categoria=armazenamento">Armazenamento</a></li>
+                    <li><a href="produtos.html?categoria=acessorios">Acessórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                    <li><a href="termos.html">Termos de Uso</a></li>
+                    <li><a href="privacidade.html">Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Suporte</h4>
+                <ul>
+                    <li><a href="suporte.html">Centro de Ajuda (FAQ)</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="index.html#assistencia">Assistência Técnica</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 HardwarePT. Todos os direitos reservados.</p>
+            <div class="payment-methods">
+                <p class="payment-label">Pagamentos seguros</p>
+                <div class="payment-icons">
+                    <div class="payment-card"><img src="imagens/mastercard.webp" alt="Mastercard"></div>
+                    <div class="payment-card"><img src="imagens/visa.png" alt="Visa"></div>
+                    <div class="payment-card"><img src="imagens/multibanco.png" alt="Multibanco"></div>
+                    <div class="payment-card"><img src="imagens/mbway.png" alt="MB Way"></div>
+                    <div class="payment-card klarna"><img src="imagens/klarna.png" alt="Klarna"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/add-to-cart.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/carrinho.js"></script>
+    <script src="js/menu.js"></script>
+    <script src="js/search-bar.js"></script>
+    <script src="js/produtos.js"></script>
+    <script src="js/index.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pedido Confirmado - HardwarePT</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Menu Hambúrguer -->
+                <button class="menu-toggle" onclick="toggleMenu()" aria-label="Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+
+                <div class="logo">
+                    <a href="index.html" style="display: flex; align-items: center; gap: 0.5rem; text-decoration: none; color: inherit;">
+                        <img src="imagens/logo.png" alt="HardwarePT" class="logo-img">
+                    </a>
+                </div>
+
+                <div class="header-actions">
+                    <div id="userMenu">
+                        <a href="login.html" class="login-btn" title="Entrar na conta">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                        </a>
+                    </div>
+
+                    <button class="cart-btn" onclick="toggleCart()">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                            <path d="M2 2H4L6 14H16L18 6H6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        <span class="cart-count" id="cartCount">0</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="confirmation-section">
+        <div class="container">
+            <div class="confirmation-box">
+                <div class="success-icon">
+                   
+                    <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="10" stroke-width="2" stroke="#22c55e"/>
+                        <path d="M9 12l2 2 4-4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" stroke="#22c55e"/>
+                    </svg>
+
+                </div>
+
+                <h1>Pedido Confirmado!</h1>
+                <p class="confirmation-message">Obrigado pela sua compra. O seu pedido foi processado com sucesso.</p>
+
+                <div class="order-details">
+                    <div class="order-detail-row">
+                        <span>Número do Pedido:</span>
+                        <strong id="orderNumber"></strong>
+                    </div>
+                    <div class="order-detail-row">
+                        <span>Data:</span>
+                        <strong id="orderDate"></strong>
+                    </div>
+                    <div class="order-detail-row">
+                        <span>Email:</span>
+                        <strong id="orderEmail"></strong>
+                    </div>
+                    <div class="order-detail-row">
+                        <span>Total:</span>
+                        <strong id="orderTotal"></strong>
+                    </div>
+                </div>
+
+                <div class="confirmation-info">
+                    <h3>O que acontece agora?</h3>
+                    <ul>
+                        <li>Receberá um email de confirmação com os detalhes do pedido</li>
+                        <li>Pode consultar o estado do pedido na sua área de cliente</li>
+                        <li>Se tiver dúvidas, contacte o nosso suporte</li>
+                    </ul>
+                </div>
+
+                <div class="btn-print-wrap" style="text-align:center; margin-bottom: 1rem;">
+                    <button class="btn-print" onclick="window.print()">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 6 2 18 2 18 9"/>
+                            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/>
+                            <rect x="6" y="14" width="12" height="8"/>
+                        </svg>
+                        Imprimir / Guardar PDF
+                    </button>
+                </div>
+
+                <div class="confirmation-actions">
+                    <a href="index.html" class="btn-primary">Voltar à Página Inicial</a>
+                    <a href="produtos.html" class="btn-secondary">Continuar a Comprar</a>
+                </div>
+
+                <!-- COMPROVATIVO (visível apenas na impressão) -->
+                <div class="print-receipt" id="printReceipt">
+
+                    <div class="pr-header">
+                        <div class="pr-brand">
+                            <svg width="36" height="36" viewBox="0 0 32 32" fill="none">
+                                <rect width="32" height="32" rx="6" fill="#111"/>
+                                <path d="M8 12L16 8L24 12V20L16 24L8 20V12Z" fill="white"/>
+                            </svg>
+                            <div>
+                                <div class="pr-brand-name">HardwarePT</div>
+                                <div class="pr-brand-sub">hardwarept.pt &bull; suporte@hardware.pt &bull; +351 21 234 5678</div>
+                            </div>
+                        </div>
+                        <div class="pr-badge">
+                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                                <circle cx="7" cy="7" r="7" fill="#16a34a"/>
+                                <path d="M4 7l2.5 2.5L10 5" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            Pedido Confirmado
+                        </div>
+                    </div>
+
+                    <div class="pr-title-row">
+                        <h2 class="pr-title">Comprovativo de Compra</h2>
+                        <span class="pr-print-date" id="printDate"></span>
+                    </div>
+
+                    <div class="pr-meta-grid">
+                        <div class="pr-meta-item">
+                            <div class="pr-meta-label">N&uacute;mero do Pedido</div>
+                            <div class="pr-meta-value" id="printOrderNumber">&mdash;</div>
+                        </div>
+                        <div class="pr-meta-item">
+                            <div class="pr-meta-label">Data</div>
+                            <div class="pr-meta-value" id="printOrderDate">&mdash;</div>
+                        </div>
+                        <div class="pr-meta-item">
+                            <div class="pr-meta-label">Email</div>
+                            <div class="pr-meta-value" id="printOrderEmail">&mdash;</div>
+                        </div>
+                        <div class="pr-meta-item">
+                            <div class="pr-meta-label">M&eacute;todo de Pagamento</div>
+                            <div class="pr-meta-value" id="printPaymentMethod">&mdash;</div>
+                        </div>
+                    </div>
+
+                    <table class="pr-items-table">
+                        <thead>
+                            <tr>
+                                <th style="width:32px">#</th>
+                                <th>Produto</th>
+                                <th style="width:55px; text-align:center">Qtd.</th>
+                                <th style="width:95px; text-align:right">Pre&ccedil;o Unit.</th>
+                                <th style="width:95px; text-align:right">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="printItemsBody">
+                            <tr><td colspan="5" style="text-align:center; color:#888; padding:1rem 0;">A carregar itens...</td></tr>
+                        </tbody>
+                    </table>
+
+                    <div class="pr-totals">
+                        <div class="pr-totals-row"><span>Subtotal</span><span id="printSubtotal">&mdash;</span></div>
+                        <div class="pr-totals-row"><span>Envio</span><span id="printShipping">Gr&aacute;tis</span></div>
+                        <div class="pr-totals-row"><span>IVA (23%)</span><span id="printIVA">&mdash;</span></div>
+                        <div class="pr-totals-final"><span>Total</span><span id="printTotal">&mdash;</span></div>
+                    </div>
+
+                    <div class="pr-footer">
+                        <div class="pr-footer-left">
+                            <strong>HardwarePT</strong><br>
+                            NIF: 123 456 789 &bull; Avenida da Liberdade, 00 &bull; 1250-069 Lisboa
+                        </div>
+                        <div class="pr-footer-right">
+                            Este documento serve como comprovativo de pagamento<br>
+                            &copy; 2026 HardwarePT &bull; Todos os direitos reservados
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+    <div class="container">
+        <div class="footer-grid">
+            <div class="footer-col">
+                <div class="footer-logo">
+                    <img src="imagens/logo2.png" class="logo-img">
+                </div>
+                <p>A sua loja online de confiança para hardware de qualidade com preços competitivos.</p>
+
+                <!-- REDES SOCIAIS -->
+                <div class="footer-social">
+                    <a href="#" class="social-icon" aria-label="Instagram">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="YouTube">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M22.54 6.42a2.78 2.78 0 0 0-1.95-1.96C18.88 4 12 4 12 4s-6.88 0-8.59.46A2.78 2.78 0 0 0 1.46 6.42 29 29 0 0 0 1 12a29 29 0 0 0 .46 5.58 2.78 2.78 0 0 0 1.95 1.96C5.12 20 12 20 12 20s6.88 0 8.59-.46a2.78 2.78 0 0 0 1.95-1.96A29 29 0 0 0 23 12a29 29 0 0 0-.46-5.58z"/><polygon points="9.75 15.02 15.5 12 9.75 8.98 9.75 15.02" fill="black"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-icon" aria-label="TikTok">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.18 8.18 0 0 0 4.78 1.52V6.75a4.85 4.85 0 0 1-1.01-.06z"/>
+                        </svg>
+                    </a>
+                </div>
+
+            </div>
+            <div class="footer-col">
+                <h4>Componentes</h4>
+                <ul>
+                    <li><a href="produtos.html?categoria=processadores">Processadores</a></li>
+                    <li><a href="produtos.html?categoria=motherboards">Motherboards</a></li>
+                    <li><a href="produtos.html?categoria=placas-graficas">Placas Gráficas</a></li>
+                    <li><a href="produtos.html?categoria=memoria-ram">Memórias RAM</a></li>
+                    <li><a href="produtos.html?categoria=fontes-de-alimentacao">Fontes de Alimentação</a></li>
+                    <li><a href="produtos.html?categoria=caixas-pc">Caixas de PC</a></li>
+                    <li><a href="produtos.html?categoria=refrigeracao">Coolers</a></li>
+                    <li><a href="produtos.html?categoria=armazenamento">Armazenamento</a></li>
+                    <li><a href="produtos.html?categoria=acessorios">Acessórios</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Empresa</h4>
+                <ul>
+                    <li><a href="sobre.html">Sobre Nós</a></li>
+                    <li><a href="termos.html">Termos de Uso</a></li>
+                    <li><a href="privacidade.html">Privacidade</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Suporte</h4>
+                <ul>
+                    <li><a href="suporte.html">Centro de Ajuda (FAQ)</a></li>
+                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="index.html#assistencia">Assistência Técnica</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 HardwarePT. Todos os direitos reservados.</p>
+            <div class="payment-methods">
+                <p class="payment-label">Pagamentos seguros</p>
+                <div class="payment-icons">
+                    <div class="payment-card"><img src="imagens/mastercard.webp" alt="Mastercard"></div>
+                    <div class="payment-card"><img src="imagens/visa.png" alt="Visa"></div>
+                    <div class="payment-card"><img src="imagens/multibanco.png" alt="Multibanco"></div>
+                    <div class="payment-card"><img src="imagens/mbway.png" alt="MB Way"></div>
+                    <div class="payment-card klarna"><img src="imagens/klarna.png" alt="Klarna"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Carrinho Lateral -->
+<div class="cart-sidebar" id="cartSidebar">
+    <div class="cart-header">
+        <h3>O seu Carrinho</h3>
+        <button onclick="toggleCart()" class="close-cart">×</button>
+    </div>
+    <div class="cart-items" id="cartItems">
+        <div class="empty-cart">
+            <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M2 2H4L6 14H16L18 6H6" stroke-linecap="round" stroke-linejoin="round"/>
+                <circle cx="9" cy="18" r="1.5"/>
+                <circle cx="15" cy="18" r="1.5"/>
+            </svg>
+            <p>O seu carrinho está vazio</p>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-subtotal">
+            <span>Subtotal</span>
+            <span id="cartSubtotal">€0,00</span>
+        </div>
+        <div class="cart-shipping">
+            <span>Envio</span>
+            <span>Grátis</span>
+        </div>
+        <div class="cart-total">
+            <span>Total</span>
+            <span id="cartTotal">€0,00</span>
+        </div>
+        <button class="btn-checkout" onclick="window.location.href='carrinho.html'">
+            Finalizar Compra
+        </button>
+    </div>
+</div>
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+
+<script src="js/config.js"></script>
+<script src="js/utils.js"></script>
+<script src="js/add-to-cart.js"></script>
+<script src="js/auth.js"></script>
+<script src="js/carrinho.js"></script>
+<script src="js/confirmacao.js"></script>
+<script src="js/menu.js"></script>
+<script src="js/search-bar.js"></script>
+
+</body>
+</html>
